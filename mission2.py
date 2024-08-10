@@ -256,3 +256,35 @@ result2 = round(target_df["시군구명"].value_counts()/seoul_df["시군구명"
 result2.sort_values(ascending=False)
 """)
 st.dataframe(result2, use_container_width=True)
+
+st.write("""
+## **미션3. 풀이(2)**
+**[풀이 의도]**
+* `시도명`이 **서울특별시**인 곳에서 `상권업종소분류명`이 **병원**인 곳을 추출
+* 각 구에서 파이차트로 시각화
+""")
+
+option = st.selectbox(
+    "확인하고 싶은 지역을 선택해 주세요.",
+    set(seoul_df["시군구명"].to_list()),
+)
+
+gu_count = seoul_df[seoul_df["시군구명"] == option].value_counts("상권업종소분류명")
+
+fig2 = px.pie(
+    values=gu_count.values, 
+    names=gu_count.index
+    )
+
+fig2.update_traces(pull= [0.3 if "정형/성형외과" in s or "피부과" in s else 0 for s in gu_count.index])
+
+skin = gu_count.loc['피부과']
+plastic_surgery = gu_count.loc['정형/성형외과']
+
+st.write(f"{option} 의 피부과 비율:", round(skin/gu_count.sum(), 3))
+st.write(f"{option} 의 정형/성형외과 비율:", round(plastic_surgery/gu_count.sum(), 3))
+st.write(f"{option} 의 피부과, 정형/성형외과 비율:", round((skin + plastic_surgery)/gu_count.sum(), 3))
+
+st.plotly_chart(fig2, use_container_width=True)
+
+st.divider()
