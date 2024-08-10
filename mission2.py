@@ -176,4 +176,83 @@ st.plotly_chart(fig2, use_container_width=True)
 
 st.divider()
 
-st.write("## Q3. 강남지역에는 다른 지역에 비해 피부과나 성형외과가 많아 보입니다. 실제로 해당 지역에 피부과나 성형외과가 다른 지역에 비해 전체 병원 수 중에서 어느 정도의 비율을 차지하고 있는지 알아보겠습니다.")
+st.write("""
+## Q3. 강남지역에는 다른 지역에 비해 피부과나 성형외과가 많아 보입니다. 실제로 해당 지역에 피부과나 성형외과가 다른 지역에 비해 전체 병원 수 중에서 어느 정도의 비율을 차지하고 있는지 알아보겠습니다.
+* 서울에 소재한 병원 중 상권업종소분류명에 "피부" 나 "성형"이 들어간 분류명을 찾아 구해주세요!
+* 피부과 성형외과 수 / 전체병원 수 로 비율을 구해주세요!
+* 비율이 높은 순서대로 정렬되게 구해주세요!
+* 수업에서 사용한 같은 CSV 파일을 사용하며 다음의 결과가 나오도록 구합니다.
+* 소숫점 두 번째짜리까지 출력하는 방법은 pandas round 로 검색해서 사용법을 알아보세요!
+
+```plain
+시군구명
+강남구     0.24
+서초구     0.17
+마포구     0.09
+영등포구    0.08
+서대문구    0.08
+강서구     0.07
+강동구     0.07
+중구      0.07
+양천구     0.07
+중랑구     0.07
+성북구     0.06
+송파구     0.06
+구로구     0.06
+은평구     0.06
+광진구     0.06
+노원구     0.05
+성동구     0.05
+금천구     0.05
+용산구     0.05
+강북구     0.05
+동대문구    0.04
+동작구     0.04
+관악구     0.04
+종로구     0.03
+도봉구     0.02
+```
+
+""")
+
+st.divider()
+
+st.write("""
+## **미션3. 풀이(1)**
+**[풀이 의도]**
+* `시도명`이 **서울특별시**인 곳에서 `상권업종소분류명`이 **병원**인 곳을 추출
+* 상권업종소분류명에서 "피부", "성형"인 곳을 찾아 필터링
+* 피부과 성형외과 수 / 전체병원 수 로 비율을 찾아 오름차순 정렬 (소숫점 두 번째짜리까지 출력)
+""")
+
+seoul_df = df[(df["시도명"]=="서울특별시") & (df["상권업종중분류명"]=="병원")]
+st.code("""
+seoul_df = df[(df["시도명"]=="서울특별시") & (df["상권업종중분류명"]=="병원")]
+""")
+st.dataframe(seoul_df)
+
+
+
+target = [s for s in set(seoul_df["상권업종소분류명"].to_list()) if "피부" in s or "성형" in s]
+st.code("""
+target = [s for s in set(seoul_df["상권업종소분류명"].to_list()) if "피부" in s or "성형" in s]
+print(target)
+        
+#result : ['피부과', '정형/성형외과']
+""")
+
+
+target_df = seoul_df[(seoul_df["상권업종소분류명"]==target[0])|(seoul_df["상권업종소분류명"]==target[1])]
+st.code("""
+# '피부과', '정형/성형외과' 인 곳을 추출
+target_df = seoul_df[(seoul_df["상권업종소분류명"]==target[0])|(seoul_df["상권업종소분류명"]==target[1])]
+""")
+st.dataframe(target_df)
+
+result2 = round(target_df["시군구명"].value_counts()/seoul_df["시군구명"].value_counts(),2)
+result2 = result2.sort_values(ascending=False)
+st.code("""
+result2 = round(target_df["시군구명"].value_counts()/seoul_df["시군구명"].value_counts(),2)
+result2.sort_values(ascending=False)
+""")
+st.dataframe(result2, use_container_width=True)
