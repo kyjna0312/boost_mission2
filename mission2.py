@@ -132,14 +132,16 @@ st.code(
     language="python"
 )
 
-st.write("### 전국 동물병원 분포도 (파이차트)")
-st.write("`animal_hospital`데이터에서 전국 동물병원의 분포도를 확인한 결과는 다음과 같음")
+st.write("### 전국 동물병원 분포도")
+st.write("`animal_hospital`데이터에서 전국 동물병원의 수를 확인한 결과는 다음과 같음")
 
 
-fig = px.pie(
-    values=animal_hospital["시도명"].value_counts().to_list(), 
-    names=animal_hospital["시도명"].value_counts().index
+fig = px.bar(
+    data_frame = animal_hospital["시도명"].value_counts(),
+    x = "count",
+    orientation='h'
 )
+
 
 st.plotly_chart(fig, use_container_width=True)
 
@@ -164,9 +166,14 @@ st.write("""
 groub_df = df.groupby("시도명")["상권업종소분류명"].value_counts().unstack()
 st.dataframe(groub_df)
 
-fig2 = px.pie(
-    values=groub_df.sum(axis=1).sort_values(ascending=False).to_list(), 
-    names=groub_df.sum(axis=1).sort_values(ascending=False).index
+fig2 = px.bar(
+    x = groub_df.sum(axis=1).sort_values(ascending=False).values,
+    y = groub_df.sum(axis=1).sort_values(ascending=False).index,
+    orientation='h'
 )
 
 st.plotly_chart(fig2, use_container_width=True)
+
+st.divider()
+
+st.write("## Q3. 강남지역에는 다른 지역에 비해 피부과나 성형외과가 많아 보입니다. 실제로 해당 지역에 피부과나 성형외과가 다른 지역에 비해 전체 병원 수 중에서 어느 정도의 비율을 차지하고 있는지 알아보겠습니다.")
