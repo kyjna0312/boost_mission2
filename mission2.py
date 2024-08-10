@@ -288,3 +288,38 @@ st.write(f"{option} 의 피부과, 정형/성형외과 비율:", round((skin + p
 st.plotly_chart(fig2, use_container_width=True)
 
 st.divider()
+
+st.write("""
+## Q4. 평균 기대수명이 점점 길어지면서 실버 의료 산업도 주목받고 있습니다. 여러분은 실버 의료 산업과 관련된 스타트업에 취업했습니다. 지도를 시각화하여 '노인/치매병원'이 주로 어디에 위치하고 있는지를 찾아보고자 합니다.
+* folium 을 통해 지도에 전국의 '노인/치매병원'을 표시해 주세요!
+* 다음과 같이 시각화 하며, folium 의 문서를 참고하여 다른 기능을 사용하여 좀 더 멋지게 지도를 꾸며도 좋습니다.
+""")
+
+st.write("""
+## **미션4. 풀이(1)**
+**[풀이 의도]**
+* `상권업종소분류명`에서 노인/치매병원를 필터링
+* `위도`, `경도` 데이터를 이용하여 지도 위에 매핑
+""")
+df.rename(columns={"위도":"lat", "경도":"lon"}, inplace=True)
+
+silver_hs = df[df["상권업종소분류명"]=="노인/치매병원"]
+
+st.map(silver_hs[["lat", "lon"]])
+
+st.write("""
+## **미션4. 풀이(2)**
+**[풀이 의도]**
+* `상권업종소분류명`에서 사용자가 선택한 데이터를 필터링
+* `위도`, `경도` 데이터를 이용하여 지도 위에 매핑
+""")
+
+option = st.selectbox(
+    "확인하고 싶은 상권업종소분류명을 선택해 주세요.",
+    set(df["상권업종소분류명"].to_list())
+)
+
+filter_df = df[df["상권업종소분류명"] == option]
+st.dataframe(filter_df)
+
+st.map(filter_df[["lat", "lon"]])
