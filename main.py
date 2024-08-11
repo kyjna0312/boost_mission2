@@ -25,10 +25,10 @@ user_info = {
     ],
     "제출링크": [
         "https://boostmission2-n2ovwylqxatx9vtmovooxf.streamlit.app/", 
-        "박기범", 
+        "https://colab.research.google.com/drive/1neEYA6VTosfbcsG4PHp6UF8GV78T4GAW?usp=sharing", 
         "https://drive.google.com/file/d/1lWwbjNIbFRlBQaZz1W4c-_P5LPe6S416/view?usp=sharing", 
-        "김기훈", 
-        "강혜림", 
+        "https://drive.google.com/file/d/1FN4qP7dhgsQJMgyYntpo6GAO6vDya2ZF/view?usp=sharing", 
+        "(미제출)", 
         "https://colab.research.google.com/drive/1YUM9hvnnqWQSDG1datiHTmR4137_ZqTZ?usp=sharing", 
         "https://drive.google.com/file/d/1mE1oTVBKUyqIgx32541ktzmOdTiOPFQF/view?usp=sharing", 
         "https://drive.google.com/file/d/1nV5oimvmtbRSeJRrfECl1hwXiQVKNSwr/view?usp=sharing"    
