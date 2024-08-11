@@ -60,8 +60,6 @@ with quiz1 :
 
     with st.echo() : 
         st.dataframe(
-            # 작성자 : 이지수 
-            # Streamlit 적용 : 김용진
             # 시도별 약국수 빈도 확인
 
             df.loc[df["상권업종소분류명"] == "약국", "시도명"].value_counts(),
@@ -72,8 +70,6 @@ with quiz1 :
 
     with st.echo() :
         st.dataframe(
-            # 작성자 : 배하니 
-            # Streamlit 적용 : 김용진
             # 시도별 약국수 빈도 확인
 
             df[df['상권업종소분류명'] == '약국'].groupby(['시도명'])['상가업소번호'].count().sort_values(ascending = False),
@@ -90,8 +86,6 @@ with quiz2 :
 
     with st.echo() : 
         st.dataframe(
-            # 작성자 : 김용진
-
             df[df["상권업종소분류명"]=="동물병원"],
             use_container_width=True
         )
@@ -107,7 +101,6 @@ with quiz2 :
     with st.echo() :
         import plotly.express as px
         # matplotlib이 아닌 plotly 라이브러리 사용
-        # 작성자 : 김용진 
 
         fig1 = px.bar(
             data_frame = animal_hospital["시도명"].value_counts(),
@@ -133,8 +126,6 @@ with quiz3 :
 
     with st.echo()  : 
         st.dataframe(
-            # 작성자 : 김용진 
-
             df[(df["시도명"]=="서울특별시") & (df["상권업종중분류명"]=="병원")]
         )
 
@@ -148,9 +139,6 @@ with quiz3 :
 
     with st.echo() : 
         st.dataframe(
-            # 작성자 : 이지수 
-            # 수정자 : 김용진
-
             seoul_df[seoul_df["상권업종소분류명"].str.contains("피부|성형")].value_counts("시군구명"),
             use_container_width=True
         )
@@ -158,9 +146,6 @@ with quiz3 :
     with st.echo() :
         st.dataframe(
             # 전체 병원 수에서 "피부", "성형"이 들어간 병워명을 나누는 코드
-            # 작성자 : 이지수 
-            # 수정자 : 김용진
-
             round(seoul_df[seoul_df["상권업종소분류명"].str.contains("피부|성형")].value_counts("시군구명")/seoul_df.value_counts("시군구명"), 2),
             use_container_width=True
         )
