@@ -152,41 +152,43 @@ with quiz3 :
     
     st.write("""### **미션3. 풀이(2)**""")
     
-    option = st.selectbox(
-    "확인하고 싶은 지역을 선택해 주세요.",
-    set(seoul_df["시군구명"].to_list()),
-    )
-
-    gu_count = seoul_df[seoul_df["시군구명"] == option].value_counts("상권업종소분류명")
-
-    fig2 = px.pie(
-        values=gu_count.values, 
-        names=gu_count.index
+    with st.echo() :
+        option = st.selectbox(
+        "확인하고 싶은 지역을 선택해 주세요.",
+        set(seoul_df["시군구명"].to_list()),
         )
 
-    fig2.update_traces(pull= [0.3 if "정형/성형외과" in s or "피부과" in s else 0 for s in gu_count.index])
+        gu_count = seoul_df[seoul_df["시군구명"] == option].value_counts("상권업종소분류명")
 
-    skin = gu_count.loc['피부과']
-    plastic_surgery = gu_count.loc['정형/성형외과']
+        fig2 = px.pie(
+            values=gu_count.values, 
+            names=gu_count.index
+            )
 
-    st.write(f"{option} 의 피부과 비율:", round(skin/gu_count.sum(), 3))
-    st.write(f"{option} 의 정형/성형외과 비율:", round(plastic_surgery/gu_count.sum(), 3))
-    st.write(f"{option} 의 피부과, 정형/성형외과 비율:", round((skin + plastic_surgery)/gu_count.sum(), 3))
+        fig2.update_traces(pull= [0.3 if "정형/성형외과" in s or "피부과" in s else 0 for s in gu_count.index])
 
-    st.plotly_chart(fig2, use_container_width=True)
+        skin = gu_count.loc['피부과']
+        plastic_surgery = gu_count.loc['정형/성형외과']
+
+        st.write(f"{option} 의 피부과 비율:", round(skin/gu_count.sum(), 3))
+        st.write(f"{option} 의 정형/성형외과 비율:", round(plastic_surgery/gu_count.sum(), 3))
+        st.write(f"{option} 의 피부과, 정형/성형외과 비율:", round((skin + plastic_surgery)/gu_count.sum(), 3))
+
+        st.plotly_chart(fig2, use_container_width=True)
 
 
 with quiz4 :
     st.write("### Quiz 4")
 
-    df.rename(columns={"위도":"lat", "경도":"lon"}, inplace=True)
+    with st.echo():
+        df.rename(columns={"위도":"lat", "경도":"lon"}, inplace=True)
 
-    option = st.selectbox(
-    "확인하고 싶은 상권업종소분류명을 선택해 주세요.",
-    set(df["상권업종소분류명"].to_list())
-    )
+        option = st.selectbox(
+            "확인하고 싶은 상권업종소분류명을 선택해 주세요.",
+            set(df["상권업종소분류명"].to_list())
+        )
 
-    filter_df = df[df["상권업종소분류명"] == option]
-    st.dataframe(filter_df)
+        filter_df = df[df["상권업종소분류명"] == option]
+        st.dataframe(filter_df)
 
-    st.map(filter_df[["lat", "lon"]])
+        st.map(filter_df[["lat", "lon"]])
